@@ -31,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Instalador instalador = instaladorRepository.findOneByDni(dni).orElse(null);
         if (cliente != null) {
             UserDto userDto = new UserDto();
+            userDto.setId(cliente.getId());
             userDto.setDni(cliente.getDni());
             userDto.setPassword(cliente.getPassword());
             userDto.setRole(cliente.getRole());
@@ -38,6 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else if (instalador != null) {
 
             UserDto userDto = new UserDto();
+            userDto.setId(instalador.getId());
             userDto.setDni(instalador.getDni());
             userDto.setPassword(instalador.getPassword());
             userDto.setRole(instalador.getRole());

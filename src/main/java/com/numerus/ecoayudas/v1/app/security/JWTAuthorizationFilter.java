@@ -20,13 +20,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-    String bearerToken = request.getHeader("Authorization");
-    if(bearerToken != null && bearerToken.startsWith("Bearer ")){
-            String token=bearerToken.replace("Bearer ","");
-        UsernamePasswordAuthenticationToken usernamePAT= JWTUtil.getAuthentication(token);
-        SecurityContextHolder.getContext().setAuthentication(usernamePAT);
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            String token = bearerToken.replace("Bearer ", "");
+            UsernamePasswordAuthenticationToken usernamePAT = JWTUtil.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(usernamePAT);
 
         }
-    filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

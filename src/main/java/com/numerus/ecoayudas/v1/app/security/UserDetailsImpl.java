@@ -5,12 +5,13 @@ import com.numerus.ecoayudas.v1.app.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+@Service
 public class UserDetailsImpl implements UserDetails {
     private final UserDto user;
 
@@ -38,6 +39,7 @@ public class UserDetailsImpl implements UserDetails {
     public String getDni(){
         return user.getDni();
     }
+    public Long getId(){return user.getId();}
 
     @Override
     public boolean isAccountNonExpired() {

@@ -1,5 +1,6 @@
 package com.numerus.ecoayudas.v1.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,10 @@ public class Solicitud {
     private Date fecha;
     @ManyToOne
     private EstadoSolicitud estado;
+
     @ManyToOne
     private Cliente cliente;
+    @JsonIgnore
     @ManyToOne
     private Instalador instalador;
 
