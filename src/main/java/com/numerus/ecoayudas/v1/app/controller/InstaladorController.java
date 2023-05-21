@@ -6,6 +6,7 @@ import com.numerus.ecoayudas.v1.app.model.Instalador;
 import com.numerus.ecoayudas.v1.app.model.Solicitud;
 import com.numerus.ecoayudas.v1.app.service.StorageService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("${api.version}")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class InstaladorController {
     public final InstaladorServiceImpl instaladorServiceImpl;
     public final StorageService storageService;
@@ -26,12 +27,16 @@ public class InstaladorController {
 
     @PostMapping("/instaladores")
     public void save(@RequestBody Instalador instalador){instaladorServiceImpl.save(instalador);}
+    @Transactional(readOnly = true)
     @GetMapping("/instaladores")
     public List<Instalador> findAll(){return instaladorServiceImpl.findAll();}
+    @Transactional(readOnly = true)
     @GetMapping("/instaladores/{id}")
     public Optional<Instalador> findById(@PathVariable Long id){return instaladorServiceImpl.findById(id);}
+    @Transactional(readOnly = true)
     @GetMapping ("/instaladores/clientes/{id}")
     List<Cliente> findAllClientes(@PathVariable Long id){return instaladorServiceImpl.findAllClientes(id);}
+    @Transactional(readOnly = true)
     @GetMapping("/instaladores/solicitudes/{id}")
     public List<Solicitud> findAllSolicitudes(@PathVariable Long id){return instaladorServiceImpl.findAllSolcitudes(id);}
 

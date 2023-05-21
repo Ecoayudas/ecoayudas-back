@@ -12,6 +12,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("${api.version}")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EstadoSolicitudController {
     public  final EstadoSolicitudServiceImpl estadoSolicitudServiceImpl;
 

@@ -15,6 +15,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 @Slf4j
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -49,9 +50,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authResult.getPrincipal();
 
-        String token = JWTUtil.createToken(userDetailsImpl.getDni(), String.valueOf(userDetailsImpl.getAuthorities()));
-        response.addHeader("Authorization", "Bearer " + token);
-        response.getWriter().close();
+        String token = JWTUtil.createToken(userDetailsImpl.getId(),userDetailsImpl.getDni(), String.valueOf(userDetailsImpl.getAuthorities()));
+        String jsonResponse = "{\"token\": \"" + token + "\"}";
+        response.setContentType("application/json");
+        response.getWriter().write(jsonResponse);
+        response.getWriter().flush();
+       /* response.addHeader("Authorization", "Bearer " + token);
+        response.getWriter().close();*/
         super.successfulAuthentication(request, response, chain, authResult);
     }
 }
