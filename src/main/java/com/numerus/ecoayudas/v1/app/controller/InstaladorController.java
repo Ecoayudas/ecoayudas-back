@@ -35,7 +35,7 @@ public class InstaladorController {
     public Optional<Instalador> findById(@PathVariable Long id){return instaladorServiceImpl.findById(id);}
     @Transactional(readOnly = true)
     @GetMapping ("/instaladores/clientes/{id}")
-    List<Cliente> findAllClientes(@PathVariable Long id){return instaladorServiceImpl.findAllClientes(id);}
+    public List<Cliente> findAllClientes(@PathVariable Long id){return instaladorServiceImpl.findAllClientes(id);}
     @Transactional(readOnly = true)
     @GetMapping("/instaladores/solicitudes/{id}")
     public List<Solicitud> findAllSolicitudes(@PathVariable Long id){return instaladorServiceImpl.findAllSolcitudes(id);}

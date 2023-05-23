@@ -1,4 +1,4 @@
-package com.numerus.ecoayudas.v1.app.security;
+package com.numerus.ecoayudas.v1.app.security.service;
 
 
 import com.numerus.ecoayudas.v1.app.dto.UserDto;
@@ -6,6 +6,7 @@ import com.numerus.ecoayudas.v1.app.model.Cliente;
 import com.numerus.ecoayudas.v1.app.model.Instalador;
 import com.numerus.ecoayudas.v1.app.repository.ClienteRespository;
 import com.numerus.ecoayudas.v1.app.repository.InstaladorRepository;
+import com.numerus.ecoayudas.v1.app.security.authentication.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

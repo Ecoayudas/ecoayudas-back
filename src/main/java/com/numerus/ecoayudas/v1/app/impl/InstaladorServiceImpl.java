@@ -4,9 +4,12 @@ import com.numerus.ecoayudas.v1.app.model.Cliente;
 import com.numerus.ecoayudas.v1.app.model.Instalador;
 import com.numerus.ecoayudas.v1.app.model.Solicitud;
 import com.numerus.ecoayudas.v1.app.repository.InstaladorRepository;
+import com.numerus.ecoayudas.v1.app.security.constants.SecurityConstants;
 import com.numerus.ecoayudas.v1.app.service.InstaladorService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,14 +26,19 @@ public class InstaladorServiceImpl implements InstaladorService {
         this.clienteServiceImpl = clienteServiceImpl;
         this.solicitudServiceImpl = solicitudServiceImpl;
     }
-    public void save(Instalador instalador){instaladorRepository.save(instalador);}
+    public void save(Instalador instalador){
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password= passwordEncoder.encode(instalador.getPassword());
+        instalador.setPassword(password);
+        instaladorRepository.save(instalador);
+    }
     public List<Instalador> findAll(){return instaladorRepository.findAll();}
     public Optional<Instalador> findById(Long id){return instaladorRepository.findById(id);}
     public void deleteById(Long id){instaladorRepository.deleteById(id);}
     public Page<Instalador> instaladorPage(Pageable pageable){return  instaladorRepository.findAll(pageable);}
    public void crearCliente(Long id, Cliente cliente){
 
-        Instalador instalador=instaladorRepository.findById(id).get();
+        Instalador instalador=instaladorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
 
         if (instalador.getId().equals(id)){
             cliente.setInstalador(instalador);
@@ -39,11 +47,11 @@ public class InstaladorServiceImpl implements InstaladorService {
             instaladorRepository.save(instalador);
 
         }else {
-            throw new IllegalArgumentException("El ID especificado no corresponde a ningún Instalador.");
+            throw new IllegalArgumentException();
         }
     }
     public void crearSolicitud(Long id, Solicitud solicitud){
-        Instalador instalador=instaladorRepository.findById(id).get();
+        Instalador instalador=instaladorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
 
         if (instalador.getId().equals(id)){
             solicitud.setInstalador(instalador);
@@ -53,23 +61,23 @@ public class InstaladorServiceImpl implements InstaladorService {
 
 
         }else {
-            throw new IllegalArgumentException("El ID especificado no corresponde a ningún Instalador.");
+            throw new IllegalArgumentException();
         }
     }
     public List<Cliente> findAllClientes(Long id){
-        Instalador instalador=instaladorRepository.findById(id).get();
+        Instalador instalador=instaladorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
         if (instalador.getId().equals(id)){
             return instalador.getClientes();
 
-        }else throw new IllegalArgumentException("El ID especificado no corresponde a ningún Instalador.");
+        }else throw new IllegalArgumentException();
 
     }
     public List<Solicitud> findAllSolcitudes(Long id){
-        Instalador instalador=instaladorRepository.findById(id).get();
+        Instalador instalador=instaladorRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
         if (instalador.getId().equals(id)){
             return instalador.getSolicitudes();
 
-        }else throw new IllegalArgumentException("El ID especificado no corresponde a ningún Instalador.");
+        }else throw new IllegalArgumentException();
 
     }
 

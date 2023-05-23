@@ -23,7 +23,7 @@ public class Solicitud {
 
     @ManyToOne
     private Cliente cliente;
-    @JsonIgnore
+
     @ManyToOne
     private Instalador instalador;
 

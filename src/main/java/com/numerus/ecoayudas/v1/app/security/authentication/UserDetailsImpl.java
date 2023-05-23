@@ -1,4 +1,4 @@
-package com.numerus.ecoayudas.v1.app.security;
+package com.numerus.ecoayudas.v1.app.security.authentication;
 
 
 import com.numerus.ecoayudas.v1.app.dto.UserDto;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Service
+
 public class UserDetailsImpl implements UserDetails {
-    private final UserDto user;
+    private final transient UserDto user;
 
     public UserDetailsImpl(UserDto user) {
         this.user = user;

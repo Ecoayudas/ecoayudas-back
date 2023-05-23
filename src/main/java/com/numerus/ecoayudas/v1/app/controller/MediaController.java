@@ -12,16 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class MediaController {
 
     private final StorageService storageService;
-    private final HttpServletRequest request;
 
-    public MediaController(StorageService storageService, HttpServletRequest request) {
+    public MediaController(StorageService storageService) {
         this.storageService = storageService;
-        this.request = request;
     }
 
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile multipartFile) {
-        String path = storageService.store(multipartFile);
+        storageService.store(multipartFile);
     }
 
 
