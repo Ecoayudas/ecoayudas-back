@@ -7,17 +7,27 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-@Slf4j
+
+/**
+ * JWTAuthorizationFilter is responsible for intercepting requests and validating JWT tokens.
+ */
 @Component
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
-
+    /**
+     * Intercepts the request and performs JWT token validation.
+     *
+     * @param request     HttpServletRequest object
+     * @param response    HttpServletResponse object
+     * @param filterChain FilterChain object
+     * @throws ServletException if an error occurs during the filter processing
+     * @throws IOException      if an I/O error occurs during the filter processing
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

@@ -19,7 +19,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
+/**
+ * Configuration class for web security.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -27,11 +29,21 @@ public class WebSecurityConfig {
 
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
+    /**
+     * Constructor for WebSecurityConfig.
+     *
+     * @param userDetailsService     UserDetailsService implementation
+     * @param jwtAuthorizationFilter JWTAuthorizationFilter instance
+     */
+
     public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, JWTAuthorizationFilter jwtAuthorizationFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
     }
 
+    /**
+     * Configures the security settings for HTTP requests.
+     */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
@@ -62,6 +74,11 @@ public class WebSecurityConfig {
 
     }
 
+    /**
+     * Creates a CorsConfigurationSource instance with CORS configuration.
+     *
+     * @return CorsConfigurationSource instance
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -74,6 +91,9 @@ public class WebSecurityConfig {
         return source;
     }
 
+    /**
+     * Configures the authentication manager.
+     */
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -84,6 +104,11 @@ public class WebSecurityConfig {
                 .build();
     }
 
+    /**
+     * Creates a PasswordEncoder instance for password encoding.
+     *
+     * @return PasswordEncoder instance
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

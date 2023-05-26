@@ -5,24 +5,29 @@ import com.numerus.ecoayudas.v1.app.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
+/**
+ * This class implements UserDetails interface
+ */
 public class UserDetailsImpl implements UserDetails {
     private final transient UserDto user;
 
+    /**
+     * Constructs a new UserDetailsImpl instance with the specified UserDto.
+     *
+     * @param user the UserDto containing the user details.
+     */
     public UserDetailsImpl(UserDto user) {
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-       List<SimpleGrantedAuthority> authorities= new ArrayList<>();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
         return authorities;
     }
@@ -36,10 +41,24 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
-    public String getDni(){
+
+    /**
+     * Returns the DNI (Documento Nacional de Identidad) of the user.
+     *
+     * @return the DNI of the user.
+     */
+    public String getDni() {
         return user.getDni();
     }
-    public Long getId(){return user.getId();}
+
+    /**
+     * Returns the ID of the user.
+     *
+     * @return the ID of the user.
+     */
+    public Long getId() {
+        return user.getId();
+    }
 
     @Override
     public boolean isAccountNonExpired() {

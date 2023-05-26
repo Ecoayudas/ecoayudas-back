@@ -1,19 +1,18 @@
 package com.numerus.ecoayudas.v1.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.numerus.ecoayudas.v1.app.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
 
-import java.util.ArrayList;
 import java.util.List;
-@Slf4j
+
+/**
+ * Represents an Instalador entity.
+ */
 @Data
 @Entity
-@Table(name="instaladores")
-public class Instalador  {
+@Table(name = "instaladores")
+public class Instalador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,14 +33,41 @@ public class Instalador  {
     @OneToMany
     private List<Solicitud> solicitudes;
 
-   public void addCliente(Cliente cliente){
+    /**
+     * Add a Cliente to the list of clientes associated with the Instalador.
+     *
+     * @param cliente The Cliente to be added.
+     */
+    public void addCliente(Cliente cliente) {
         clientes.add(cliente);
     }
 
-    public void addSolicitud(Solicitud solicitud){
+    /**
+     * Add a Solicitud to the list of solicitudes associated with the Instalador.
+     *
+     * @param solicitud The Solicitud to be added.
+     */
+    public void addSolicitud(Solicitud solicitud) {
         solicitudes.add(solicitud);
     }
 
+    /**
+     * Constructor for Instalador.
+     *
+     * @param id            The ID of the Instalador.
+     * @param dni           The DNI of the Instalador.
+     * @param nombre        The nombre of the Instalador.
+     * @param contacto      The contacto of the Instalador.
+     * @param direccion     The direccion of the Instalador.
+     * @param telefono      The telefono of the Instalador.
+     * @param email         The email of the Instalador.
+     * @param documentacion The documentacion of the Instalador.
+     * @param role          The role of the Instalador.
+     * @param password      The password of the Instalador.
+     * @param username      The username of the Instalador.
+     * @param clientes      The list of clientes associated with the Instalador.
+     * @param solicitudes   The list of solicitudes associated with the Instalador.
+     */
     public Instalador(Long id, String dni, String nombre, String contacto, String direccion, String telefono, String email, String documentacion, String role, String password, String username, List<Cliente> clientes, List<Solicitud> solicitudes) {
 
         this.id = id;
@@ -59,6 +85,9 @@ public class Instalador  {
         this.solicitudes = solicitudes;
     }
 
+    /**
+     * Default constructor for Instalador.
+     */
     public Instalador() {
     }
 }
