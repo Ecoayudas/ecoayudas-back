@@ -1,6 +1,6 @@
 package com.numerus.ecoayudas.v1.app.controller;
 
-import com.numerus.ecoayudas.v1.app.impl.InstaladorServiceImpl;
+import com.numerus.ecoayudas.v1.app.service.impl.InstaladorServiceImpl;
 import com.numerus.ecoayudas.v1.app.model.Instalador;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

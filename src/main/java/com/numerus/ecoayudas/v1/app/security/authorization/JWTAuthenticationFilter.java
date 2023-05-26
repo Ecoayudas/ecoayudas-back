@@ -10,7 +10,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,9 +21,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-@Slf4j
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+/**
+ * JWTAuthenticationFilter is responsible for handling the authentication process for username/password-based authentication.
+ * It extends UsernamePasswordAuthenticationFilter.
+ */
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    /**
+     * Attempts the authentication process based on the provided username and password.
+     *
+     * @param request  HttpServletRequest object
+     * @param response HttpServletResponse object
+     * @return Authentication object representing the authenticated user
+     * @throws AuthenticationException if the authentication process fails
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
@@ -51,6 +61,16 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
+    /**
+     * Handles the successful authentication and generates a JWT token.
+     *
+     * @param request    HttpServletRequest object
+     * @param response   HttpServletResponse object
+     * @param chain      FilterChain object
+     * @param authResult Authentication object representing the authenticated user
+     * @throws IOException      if an I/O error occurs during the handling process
+     * @throws ServletException if an error occurs during the handling process
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,

@@ -3,14 +3,15 @@ package com.numerus.ecoayudas.v1.app.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+/**
+ * Represents a Cliente entity.
+ */
 @Data
 @Entity
 @Table(name = "clientes")
-@Slf4j
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,23 @@ public class Cliente {
     @OneToMany
     private List<Solicitud> solicitudes;
 
+    /**
+     * Constructor for Cliente.
+     *
+     * @param id            The ID of the cliente.
+     * @param dni           The DNI of the cliente.
+     * @param nombre        The nombre of the cliente.
+     * @param apellidos     The apellidos of the cliente.
+     * @param direccion     The direccion of the cliente.
+     * @param telefono      The telefono of the cliente.
+     * @param email         The email of the cliente.
+     * @param documentacion The documentacion of the cliente.
+     * @param role          The role of the cliente.
+     * @param password      The password of the cliente.
+     * @param instalador    The associated instalador.
+     * @param solicitudes   The list of solicitudes associated with the cliente.
+     */
+
     public Cliente(Long id, String dni, String nombre, String apellidos, String direccion, String telefono, String email, String documentacion, String role, String password, Instalador instalador, List<Solicitud> solicitudes) {
         this.id = id;
         this.dni = dni;
@@ -47,7 +65,9 @@ public class Cliente {
         this.instalador = instalador;
         this.solicitudes = solicitudes;
     }
-
+    /**
+     * Default constructor for Cliente.
+     */
     public Cliente() {
     }
 }
