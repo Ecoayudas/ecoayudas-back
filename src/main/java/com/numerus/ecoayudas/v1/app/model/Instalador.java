@@ -1,5 +1,6 @@
 package com.numerus.ecoayudas.v1.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.numerus.ecoayudas.v1.app.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,8 +27,10 @@ public class Instalador  {
     private String role;
     private String password;
     private String username;
+    @JsonIgnore
     @OneToMany
     private List<Cliente> clientes;
+    @JsonIgnore
     @OneToMany
     private List<Solicitud> solicitudes;
 

@@ -1,19 +1,23 @@
-package com.numerus.ecoayudas.v1.app.security;
+package com.numerus.ecoayudas.v1.app.security.config;
 
 
-import lombok.extern.slf4j.Slf4j;
+import com.numerus.ecoayudas.v1.app.security.constants.SecurityConstants;
+import com.numerus.ecoayudas.v1.app.security.service.UserDetailsServiceImpl;
+import com.numerus.ecoayudas.v1.app.security.authentication.JWTAuthorizationFilter;
+import com.numerus.ecoayudas.v1.app.security.authorization.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @Configuration
@@ -32,17 +36,20 @@ public class WebSecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authenticationManager);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
+        jwtAuthenticationFilter.setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
 
 
         return http
                 .csrf().disable()
-               // .securityMatcher("/api/v1/**")
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST,"/api/v1/login").permitAll()//permitimos el acceso a todos
-                .requestMatchers("/api/v1/upload").authenticated()
-                .requestMatchers("/api/v1/clientes/**").hasAuthority("[CLIENTE]")
-                .requestMatchers("/api/v1/instaladores/**").hasAuthority("[INSTALADOR]")//denegamos el acceso a todos los endpoint sin token válido
+                .requestMatchers(SecurityConstants.LOGIN_URL,
+                        SecurityConstants.CLIENTE_URL,
+                        SecurityConstants.INSTALADOR_URL).permitAll()
+                .requestMatchers(SecurityConstants.CLIENTE_URL1).hasAuthority(SecurityConstants.AUTH_CLIENTE)
+                .requestMatchers(SecurityConstants.INSTALADOR_URL1).hasAuthority(SecurityConstants.AUTH_INSTALADOR)
+                .requestMatchers(SecurityConstants.UPLOAD_URL, SecurityConstants.LOGOUT_URL).hasAnyAuthority(SecurityConstants.AUTH_CLIENTE, SecurityConstants.AUTH_INSTALADOR)
                 .and()
                 .httpBasic()
                 .and()
@@ -50,9 +57,21 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(jwtAuthenticationFilter)
-                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthorizationFilter, JWTAuthenticationFilter.class)
                 .build();
 
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin(SecurityConstants.ANGULAR_URL);
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration(SecurityConstants.API_URL, configuration);
+        return source;
     }
 
 
@@ -67,7 +86,7 @@ public class WebSecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();//return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
 }

@@ -1,16 +1,19 @@
-package com.numerus.ecoayudas.v1.app.security;
+package com.numerus.ecoayudas.v1.app.security.authentication;
 
 
 import com.numerus.ecoayudas.v1.app.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 
 public class UserDetailsImpl implements UserDetails {
-    private final UserDto user;
+    private final transient UserDto user;
 
     public UserDetailsImpl(UserDto user) {
         this.user = user;
@@ -18,18 +21,10 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
-        /*@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return authorities;*/
 
-       /* List<SimpleGrantedAuthority> authorities= new ArrayList<>();
+       List<SimpleGrantedAuthority> authorities= new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
-        return authorities;*/
+        return authorities;
     }
 
     @Override
@@ -44,6 +39,7 @@ public class UserDetailsImpl implements UserDetails {
     public String getDni(){
         return user.getDni();
     }
+    public Long getId(){return user.getId();}
 
     @Override
     public boolean isAccountNonExpired() {

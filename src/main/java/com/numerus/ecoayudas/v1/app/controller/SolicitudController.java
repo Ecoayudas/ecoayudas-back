@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${api.version}")
+@CrossOrigin(origins = "http://localhost:4200")
 public class SolicitudController {
 
     public  final SolicitudServiceImpl solicitudServiceImpl;

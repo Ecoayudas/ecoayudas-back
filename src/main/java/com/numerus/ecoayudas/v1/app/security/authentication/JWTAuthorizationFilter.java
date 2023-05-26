@@ -1,6 +1,8 @@
-package com.numerus.ecoayudas.v1.app.security;
+package com.numerus.ecoayudas.v1.app.security.authentication;
 
 
+import com.numerus.ecoayudas.v1.app.security.utils.JWTUtils;
+import com.numerus.ecoayudas.v1.app.security.constants.SecurityConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,13 +22,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-    String bearerToken = request.getHeader("Authorization");
-    if(bearerToken != null && bearerToken.startsWith("Bearer ")){
-            String token=bearerToken.replace("Bearer ","");
-        UsernamePasswordAuthenticationToken usernamePAT= JWTUtil.getAuthentication(token);
-        SecurityContextHolder.getContext().setAuthentication(usernamePAT);
+        String bearerToken = request.getHeader(SecurityConstants.HEADER_STRING);
+        if (bearerToken != null && bearerToken.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+            String token = bearerToken.replace(SecurityConstants.TOKEN_PREFIX, "");
+            UsernamePasswordAuthenticationToken usernamePAT = JWTUtils.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(usernamePAT);
 
         }
-    filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }
