@@ -1,4 +1,4 @@
-package com.numerus.ecoayudas.v1.app.security.authorization;
+package com.numerus.ecoayudas.v1.app.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

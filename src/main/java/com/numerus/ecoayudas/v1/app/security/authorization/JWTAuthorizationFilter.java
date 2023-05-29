@@ -1,4 +1,4 @@
-package com.numerus.ecoayudas.v1.app.security.authentication;
+package com.numerus.ecoayudas.v1.app.security.authorization;
 
 
 import com.numerus.ecoayudas.v1.app.security.utils.JWTUtils;

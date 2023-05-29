@@ -3,8 +3,8 @@ package com.numerus.ecoayudas.v1.app.security.config;
 
 import com.numerus.ecoayudas.v1.app.security.constants.SecurityConstants;
 import com.numerus.ecoayudas.v1.app.security.service.UserDetailsServiceImpl;
-import com.numerus.ecoayudas.v1.app.security.authentication.JWTAuthorizationFilter;
-import com.numerus.ecoayudas.v1.app.security.authorization.JWTAuthenticationFilter;
+import com.numerus.ecoayudas.v1.app.security.authorization.JWTAuthorizationFilter;
+import com.numerus.ecoayudas.v1.app.security.authentication.JWTAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
